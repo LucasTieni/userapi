@@ -73,7 +73,7 @@ class UserIT {
 	}
 	
 	@Test
-	@DisplayName("removerById should remove User by Id ")
+	@DisplayName("delete should remove User by Id ")
 	void deleteUser_ReturnsVoid() {
 		UserInput userToBeSaved = UserCreator.createValidUserInput();
 		

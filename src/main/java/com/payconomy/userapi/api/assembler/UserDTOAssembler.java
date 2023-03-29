@@ -25,6 +25,9 @@ public class UserDTOAssembler
 	
 	public UserDTO toModel(User user) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+//		UserDTO userDTO = createModelWithId(user.getId(), user);
+//		modelMapper.map(user, userDTO);
+//		return userDTO;
 		return modelMapper.map(user, UserDTO.class);
 	}
 	
