@@ -51,6 +51,15 @@ public class UserCreator {
 				.build();
 	}
 	
+	public static UserInput createValidUserInput2() {
+		return UserInput.builder()
+				.name("Obi Wan")
+				.address("Berliner Str.")
+				.age(25L)
+				.email("obiwan@gmail.com")
+				.build();
+	}
+	
 	public static UserDTO createValidUserDTO() {
 		return UserDTO.builder()
 				.id(1L)
