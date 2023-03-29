@@ -12,6 +12,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +24,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.hamcrest.Matchers.hasSize;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payconomy.userapi.api.DTO.UserDTO;
 import com.payconomy.userapi.api.DTO.input.UserInput;
 import com.payconomy.userapi.api.assembler.UserAssembler;
 import com.payconomy.userapi.api.assembler.UserDTOAssembler;
@@ -98,6 +103,31 @@ class UserControllerTest {
 			.andExpect(status().isConflict());
 	}
 	
+	@Test
+	@DisplayName("list should returns list of all users")
+	void listReturnsListOfAllUsers() throws Exception{
+		List<User> users = List.of(UserCreator.createValidUser());
+		List<UserDTO> usersDTO = List.of(UserCreator.createValidUserDTO());
+		
+		when(userService.list()).thenReturn(users);
+	    when(userDTOAssembler.toCollectionDTO(users)).thenReturn(usersDTO);
+	    
+	    mockMvc.perform(get("/users"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", hasSize(1)));
+	}
+	
+	@Test
+	@DisplayName("list should returns no users")
+	void listShouldReturnsNoUsers() throws Exception{
+		
+		when(userService.list()).thenReturn(Collections.emptyList());
+	    when(userDTOAssembler.toCollectionDTO(any())).thenReturn(Collections.emptyList());
+	    
+	    mockMvc.perform(get("/users"))
+			.andExpect(status().isNoContent());
+	  }
+
 	@Test
 	@DisplayName("update should updates the user")
 	void updateEditUserWhenSuccessful() throws Exception {

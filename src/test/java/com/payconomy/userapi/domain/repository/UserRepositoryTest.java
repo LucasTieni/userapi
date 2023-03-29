@@ -2,7 +2,6 @@ package com.payconomy.userapi.domain.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.util.Optional;
 
@@ -15,7 +14,7 @@ import com.payconomy.userapi.domain.model.User;
 import com.payconomy.userapi.utils.UserCreator;
 
 @DataJpaTest
-//@AutoConuserTestDatabase(replace=Replace.NONE)
+//@AutoConfigureTestDatabase(replace=Replace.NONE)
 @DisplayName("Tests for User Repository")
 class UserRepositoryTest {
 
@@ -84,7 +83,7 @@ class UserRepositoryTest {
 	@Test
 	@DisplayName("Delete throws exception when user not found")
 	void deleteThrowsExceptionWhenUserNotFound() {
-		assertThatThrownBy(() -> userRepository.deleteById(anyLong()))
+		assertThatThrownBy(() -> userRepository.deleteById(1L))
 			.isInstanceOf(RuntimeException.class);
 	}
 	

@@ -3,16 +3,13 @@ package com.payconomy.userapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.payconomy.userapi.domain.exception.EntityInUseException;
 import com.payconomy.userapi.domain.exception.UserNotFoundException;
 import com.payconomy.userapi.domain.model.User;
 import com.payconomy.userapi.domain.repository.UserRepository;
-
 
 @Service
 public class UserService {
@@ -36,11 +33,7 @@ public class UserService {
 			userRepository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new UserNotFoundException(userId);
-
-		} catch (DataIntegrityViolationException e) {
-			throw new EntityInUseException(
-					String.format("User with code %d cannot be removed, because it is in use.", userId));
-		}
+		} 
 	}
 	
 	public User findOrFail(Long userId) {
