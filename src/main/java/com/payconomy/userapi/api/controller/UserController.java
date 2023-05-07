@@ -42,13 +42,13 @@ public class UserController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public UserDTO add(@RequestBody @Valid UserInput userInput){
 		User user = userAssembler.toDomainObject(userInput);
-		return userDTOAssembler.toModel(userService.save(user));
+		return userDTOAssembler.toModelLink(userService.save(user));
 	}
 	
 	@GetMapping(value = "/{userId}")
 	public UserDTO find(@PathVariable Long userId) {
 		User user = userService.findOrFail(userId);
-		return userDTOAssembler.toModel(user);
+		return userDTOAssembler.toModelLink(user);
 	}
 	
 	@GetMapping
